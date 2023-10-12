@@ -366,7 +366,7 @@ QFileInfo PerfSymbolTable::findDebugInfoFile(
 
     // try again in /usr/lib/debug folder
     // some distros use for example /usr/lib/debug/lib (ubuntu) and some use /usr/lib/debug/usr/lib (fedora)
-    const auto usr = QString(QDir::separator() + QLatin1String("usr") + QDir::separator());
+    const auto usr = QFileInfo(QDir::separator() + QLatin1String("usr") + QDir::separator()).path();
     auto folderWithoutUsr = folder;
     folderWithoutUsr.replace(usr, QDir::separator());
 
