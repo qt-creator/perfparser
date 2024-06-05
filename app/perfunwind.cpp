@@ -667,7 +667,7 @@ QVariant readTraceItem(const QByteArray &data, quint32 offset, quint32 size, boo
         case 2: return readFromArray<qint16>(data, offset, byteSwap);
         case 4: return readFromArray<qint32>(data, offset, byteSwap);
         case 8: return readFromArray<qint64>(data, offset, byteSwap);
-        default: return QVariant::Invalid;
+        default: return {};
         }
     } else {
         switch (size) {
@@ -675,7 +675,7 @@ QVariant readTraceItem(const QByteArray &data, quint32 offset, quint32 size, boo
         case 2: return readFromArray<quint16>(data, offset, byteSwap);
         case 4: return readFromArray<quint32>(data, offset, byteSwap);
         case 8: return readFromArray<quint64>(data, offset, byteSwap);
-        default: return QVariant::Invalid;
+        default: return {};
         }
     }
 }
@@ -687,7 +687,7 @@ QVariant PerfUnwind::readTraceData(const QByteArray &data, const FormatField &fi
             || field.size > quint32(std::numeric_limits<int>::max())
             || field.offset + field.size > quint32(std::numeric_limits<int>::max())
             || static_cast<int>(field.offset + field.size) > data.length()) {
-        return QVariant::Invalid;
+        return {};
     }
 
     if (field.flags & FIELD_IS_ARRAY) {
@@ -943,7 +943,7 @@ PerfKallsymEntry PerfUnwind::findKallsymEntry(quint64 address)
                                                 QDir::separator() +
                                                 QString::fromUtf8(buildId.toHex()) +
                                                 QDir::separator() + QLatin1String("kallsyms");
-                    if (QFile::exists(buildIdPath)) {
+                    if (QFileInfo::exists(buildIdPath)) {
                         path = buildIdPath;
                         break;
                     }

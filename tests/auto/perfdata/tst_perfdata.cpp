@@ -190,7 +190,7 @@ void TestPerfData::testTracingData()
         QCOMPARE(sample.tracePointData.size(), 1);
         auto it = sample.tracePointData.constBegin();
         QCOMPARE(client.string(it.key()), QByteArray("__probe_ip"));
-        QCOMPARE(it.value().type(), QVariant::ULongLong);
+        QCOMPARE(it.value().typeId(), QMetaType::ULongLong);
     }
 }
 
@@ -213,7 +213,7 @@ void TestPerfData::testContentSize()
 
 Q_DECL_UNUSED static void compressFile(const QString& input, const QString& output = QString())
 {
-    QVERIFY(!input.isEmpty() && QFile::exists(input));
+    QVERIFY(!input.isEmpty() && QFileInfo::exists(input));
 
     if (output.isEmpty()) {
         compressFile(input, input + QLatin1String(".zlib"));
@@ -231,7 +231,7 @@ Q_DECL_UNUSED static void compressFile(const QString& input, const QString& outp
 
 static void uncompressFile(const QString& input, const QString& output = QString())
 {
-    QVERIFY(!input.isEmpty() && QFile::exists(input));
+    QVERIFY(!input.isEmpty() && QFileInfo::exists(input));
 
     if (output.isEmpty()) {
         auto suffix = QLatin1String(".zlib");
@@ -283,11 +283,11 @@ void TestPerfData::testFiles()
 #endif
 
     const auto perfDataFileCompressed = QFINDTESTDATA(dataFile + QLatin1String(".zlib"));
-    QVERIFY(!perfDataFileCompressed.isEmpty() && QFile::exists(perfDataFileCompressed));
+    QVERIFY(!perfDataFileCompressed.isEmpty() && QFileInfo::exists(perfDataFileCompressed));
     uncompressFile(perfDataFileCompressed);
 
     const auto perfDataFile = QFINDTESTDATA(dataFile);
-    QVERIFY(!perfDataFile.isEmpty() && QFile::exists(perfDataFile));
+    QVERIFY(!perfDataFile.isEmpty() && QFileInfo::exists(perfDataFile));
     const auto expectedOutputFileCompressed = QString(perfDataFile + QLatin1String(".expected.txt.zlib"));
     const auto expectedOutputFileUncompressed = QString(perfDataFile + QLatin1String(".expected.txt"));
     const auto actualOutputFile = QString(perfDataFile + QLatin1String(".actual.txt"));
