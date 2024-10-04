@@ -112,7 +112,7 @@ private slots:
     void testProc()
     {
         const auto path = QStringLiteral("/proc/kallsyms");
-        if (!QFile::exists(path))
+        if (!QFileInfo::exists(path))
             QSKIP("/proc/kallsysms not available");
 
         auto checkSysCtl = [](const QString &knob, int maxValue) -> bool {
@@ -178,7 +178,7 @@ private slots:
     void benchmarkProc()
     {
         const auto path = QStringLiteral("/proc/kallsyms");
-        if (!QFile::exists(path))
+        if (!QFileInfo::exists(path))
             QSKIP("/proc/kallsysms not available");
 
         QBENCHMARK {
