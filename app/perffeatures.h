@@ -25,7 +25,7 @@
 #include "perftracingdata.h"
 
 #include <QHash>
-#include <QVector>
+#include <QList>
 
 struct PerfEventHeader {
     PerfEventHeader() : type(0), misc(0), size(0) {}

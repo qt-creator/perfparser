@@ -21,7 +21,7 @@
 #pragma once
 
 #include <QFileInfo>
-#include <QVector>
+#include <QList>
 #include <limits>
 
 class PerfElfMap : public QObject
@@ -117,7 +117,7 @@ signals:
 
 private:
     // elf sorted by start address
-    QVector<ElfInfo> m_elfs;
+    QList<ElfInfo> m_elfs;
     // last registered elf with zero pgoff
     ElfInfo m_lastBase;
 };

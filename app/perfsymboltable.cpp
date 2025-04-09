@@ -246,7 +246,7 @@ int PerfSymbolTable::parseDie(CuDieRangeMapping *cudie, Dwarf_Die *top, quint64 
     }
 }
 
-qint32 PerfSymbolTable::parseDwarf(CuDieRangeMapping *cudie, SubProgramDie *subprogram, const QVector<Dwarf_Die> &inlined,
+qint32 PerfSymbolTable::parseDwarf(CuDieRangeMapping *cudie, SubProgramDie *subprogram, const QList<Dwarf_Die> &inlined,
                                    Dwarf_Addr bias, quint64 offset, quint64 size, quint64 relAddr, qint32 binaryId, qint32 binaryPathId, qint32 actualPathId, bool isKernel)
 {
     Dwarf_Files *files = nullptr;
@@ -779,7 +779,7 @@ static bool operator<(const PerfSymbolTable::PerfMapSymbol &a,
 
 QByteArray PerfSymbolTable::symbolFromPerfMap(quint64 ip, GElf_Off *offset) const
 {
-    QVector<PerfMapSymbol>::ConstIterator sym
+    QList<PerfMapSymbol>::ConstIterator sym
             = std::upper_bound(m_perfMap.begin(), m_perfMap.end(), PerfMapSymbol(ip));
     if (sym != m_perfMap.begin()) {
         --sym;

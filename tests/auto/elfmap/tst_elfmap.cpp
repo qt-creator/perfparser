@@ -100,7 +100,7 @@ private slots:
         QCOMPARE(map.findElf(110), first);
 
         PerfElfMap::ElfInfo second(file1, 105, 20, 0);
-        QCOMPARE(registerElf(&map, second), QVector<PerfElfMap::ElfInfo>{first});
+        QCOMPARE(registerElf(&map, second), QList<PerfElfMap::ElfInfo>{first});
         if (firstIsFile)
             second.baseAddr = first.addr;
         QCOMPARE(map.findElf(110), second);
@@ -109,7 +109,7 @@ private slots:
         QCOMPARE(map.findElf(97), fragment1);
 
         const PerfElfMap::ElfInfo third(file2, 100, 20, 0);
-        QVector<PerfElfMap::ElfInfo> invalidatedByThird = {fragment1, second};
+        QList<PerfElfMap::ElfInfo> invalidatedByThird = {fragment1, second};
         QCOMPARE(registerElf(&map, third), invalidatedByThird);
         QCOMPARE(map.findElf(110), third);
         QCOMPARE(map.findElf(110), third);
@@ -345,9 +345,9 @@ private slots:
     }
 
 private:
-    QVector<PerfElfMap::ElfInfo> registerElf(PerfElfMap *map, const PerfElfMap::ElfInfo &info)
+    QList<PerfElfMap::ElfInfo> registerElf(PerfElfMap *map, const PerfElfMap::ElfInfo &info)
     {
-        QVector<PerfElfMap::ElfInfo> invalidated;
+        QList<PerfElfMap::ElfInfo> invalidated;
         auto connection = connect(map, &PerfElfMap::aboutToInvalidate, this,
                                   [&invalidated](const PerfElfMap::ElfInfo& other) { // clazy:exclude=lambda-in-connect
                                       invalidated.push_back(other);

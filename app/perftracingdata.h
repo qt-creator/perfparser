@@ -22,7 +22,7 @@
 
 #include <QByteArray>
 #include <QHash>
-#include <QVector>
+#include <QList>
 
 enum FormatFlags: quint32
 {
@@ -63,8 +63,8 @@ struct EventFormat
 {
     QByteArray name;
     QByteArray system;
-    QVector<FormatField> commonFields;
-    QVector<FormatField> fields;
+    QList<FormatField> commonFields;
+    QList<FormatField> fields;
     quint32 flags = 0;
 };
 
@@ -95,9 +95,9 @@ private:
     qint32 m_filePageSize = false;
 
     QHash<qint32, EventFormat> m_eventFormats;
-    QVector<FormatField> m_headerFields;
+    QList<FormatField> m_headerFields;
     QHash<quint64, QByteArray> m_ftracePrintk;
-    QVector<QByteArray> m_savedCmdlines;
+    QList<QByteArray> m_savedCmdlines;
 
     friend QDataStream &operator>>(QDataStream &stream, PerfTracingData &record);
 };

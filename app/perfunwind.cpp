@@ -553,7 +553,7 @@ void PerfUnwind::unwindStack()
 
     dwfl_getthread_frames(dwfl, m_currentUnwind.sample->pid(), frameCallback, &m_currentUnwind);
     if (m_currentUnwind.isInterworking) {
-        QVector<qint32> savedFrames = m_currentUnwind.frames;
+        QList<qint32> savedFrames = m_currentUnwind.frames;
 
         // If it's an ARM interworking veneer, we assume that we can find a return address in LR and
         // no stack has been used for the veneer itself.
@@ -790,7 +790,7 @@ void PerfUnwind::analyze(const PerfRecordSample &sample)
         }
     }
 
-    QVector<QPair<qint32, quint64>> values;
+    QList<QPair<qint32, quint64>> values;
     const auto readFormats = sample.readFormats();
     if (readFormats.isEmpty()) {
         values.push_back({ attributesId, sample.period() });

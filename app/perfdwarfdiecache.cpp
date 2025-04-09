@@ -258,9 +258,9 @@ QByteArray demangle(const QByteArray &mangledName)
     return mangledName;
 }
 
-QVector<Dwarf_Die> findInlineScopes(Dwarf_Die *subprogram, Dwarf_Addr offset)
+QList<Dwarf_Die> findInlineScopes(Dwarf_Die *subprogram, Dwarf_Addr offset)
 {
-    QVector<Dwarf_Die> scopes;
+    QList<Dwarf_Die> scopes;
     walkDieTree([offset, &scopes](Dwarf_Die *die) {
         if (dwarf_tag(die) != DW_TAG_inlined_subroutine)
             return WalkResult::Recurse;

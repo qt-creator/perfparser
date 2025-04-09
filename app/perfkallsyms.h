@@ -21,7 +21,7 @@
 
 #include <QByteArray>
 #include <QCoreApplication>
-#include <QVector>
+#include <QList>
 
 struct PerfKallsymEntry
 {
@@ -45,6 +45,6 @@ public:
     PerfKallsymEntry findEntry(quint64 address) const;
 
 private:
-    QVector<PerfKallsymEntry> m_entries;
+    QList<PerfKallsymEntry> m_entries;
     QString m_errorString;
 };

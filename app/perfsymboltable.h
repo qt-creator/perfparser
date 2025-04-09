@@ -109,7 +109,7 @@ private:
     };
 
     QFile m_perfMapFile;
-    QVector<PerfMapSymbol> m_perfMap;
+    QList<PerfMapSymbol> m_perfMap;
     bool m_hasPerfMap;
     bool m_cacheIsDirty;
 
@@ -129,7 +129,7 @@ private:
                  Dwarf_Files *files, Dwarf_Addr entry, qint32 parentLocationId);
     int insertSubprogram(CuDieRangeMapping *cudie, Dwarf_Die *top, Dwarf_Addr entry, quint64 offset, quint64 size, quint64 relAddr, qint32 binaryId, qint32 binaryPathId, qint32 actualPathId,
                          qint32 inlineParent, bool isKernel);
-    qint32 parseDwarf(CuDieRangeMapping *cudie, SubProgramDie *subprogram, const QVector<Dwarf_Die> &inlined,
+    qint32 parseDwarf(CuDieRangeMapping *cudie, SubProgramDie *subprogram, const QList<Dwarf_Die> &inlined,
                       Dwarf_Addr bias, quint64 offset, quint64 size, quint64 relAddr, qint32 binaryId, qint32 binaryPathId, qint32 actualPathId, bool isKernel);
 };
 

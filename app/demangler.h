@@ -20,7 +20,7 @@
 #ifndef DEMANGLER_H
 #define DEMANGLER_H
 
-#include <QVector>
+#include <QList>
 
 class Demangler
 {
@@ -38,7 +38,7 @@ private:
         demangler_t demangler;
     };
 
-    QVector<DemangleInfo> m_demanglers;
+    QList<DemangleInfo> m_demanglers;
 };
 
 #endif // DEMANGLER_H

@@ -173,7 +173,7 @@ void TestPerfData::testTracingData()
     PerfParserTestClient client;
     client.extractTrace(&output);
 
-    const QVector<PerfParserTestClient::SampleEvent> samples = client.samples();
+    const QList<PerfParserTestClient::SampleEvent> samples = client.samples();
     QVERIFY(samples.length() > 0);
     for (const PerfParserTestClient::SampleEvent &sample : samples) {
         QCOMPARE(sample.values.size(), 1);

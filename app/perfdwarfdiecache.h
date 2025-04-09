@@ -21,8 +21,8 @@
 
 #include <libdwfl.h>
 
-#include <QVector>
 #include <QHash>
+#include <QList>
 
 #include <algorithm>
 
@@ -44,7 +44,7 @@ struct DwarfRange
 struct DieRanges
 {
     Dwarf_Die die;
-    QVector<DwarfRange> ranges;
+    QList<DwarfRange> ranges;
 
     bool contains(Dwarf_Addr addr) const
     {
@@ -97,7 +97,7 @@ private:
 
     Dwarf_Addr m_bias = 0;
     DieRanges m_cuDieRanges;
-    QVector<SubProgramDie> m_subPrograms;
+    QList<SubProgramDie> m_subPrograms;
     QHash<Dwarf_Off, QByteArray> m_dieNameCache;
 };
 
@@ -106,7 +106,7 @@ private:
  * @p subprogram DIE sub tree that should be traversed to look for inlined scopes
  * @p offset bias-corrected address that is checked against the dwarf ranges of the DIEs
  */
-QVector<Dwarf_Die> findInlineScopes(Dwarf_Die *subprogram, Dwarf_Addr offset);
+QList<Dwarf_Die> findInlineScopes(Dwarf_Die *subprogram, Dwarf_Addr offset);
 
 /**
  * @return the absolute source path for a @p path that may be absolute already or relative to the compilation directory
@@ -149,7 +149,7 @@ public:
     CuDieRangeMapping *findCuDie(Dwarf_Addr addr);
 
 public:
-    QVector<CuDieRangeMapping> m_cuDieRanges;
+    QList<CuDieRangeMapping> m_cuDieRanges;
 };
 QT_BEGIN_NAMESPACE
 Q_DECLARE_TYPEINFO(DwarfRange, Q_MOVABLE_TYPE);

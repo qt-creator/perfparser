@@ -101,7 +101,7 @@ public:
             firstGuessedFrame(-1), isInterworking(false) {}
 
         QHash<qint32, QHash<quint64, Dwarf_Word>> stackValues;
-        QVector<qint32> frames;
+        QList<qint32> frames;
         PerfUnwind *unwind;
         const PerfRecordSample *sample;
         int maxFrames;
@@ -303,7 +303,7 @@ private:
     QHash<Location, qint32> m_locations;
     QHash<qint32, Symbol> m_symbols;
     QHash<quint64, qint32> m_attributeIds;
-    QVector<PerfEventAttributes> m_attributes;
+    QList<PerfEventAttributes> m_attributes;
     QHash<QByteArray, QByteArray> m_buildIds;
 
     uint m_lastEventBufferSize;
