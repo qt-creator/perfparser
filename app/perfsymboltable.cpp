@@ -798,8 +798,10 @@ void PerfSymbolTable::updatePerfMap()
     if (!m_hasPerfMap)
         return;
 
-    if (!m_perfMapFile.isOpen())
-        m_perfMapFile.open(QIODevice::ReadOnly);
+    // Not being able to open the perf.map file is not fatal. It simply means
+    // that the application hasn't written it, yet.
+    if (!m_perfMapFile.isOpen() && !m_perfMapFile.open(QIODevice::ReadOnly))
+        return;
 
     bool readLine = false;
     while (!m_perfMapFile.atEnd()) {
