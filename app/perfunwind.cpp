@@ -33,6 +33,11 @@ const qint32 PerfUnwind::s_kernelPid = -1;
 
 uint qHash(const PerfUnwind::Location &location, uint seed)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    return qHashMulti(
+        seed, location.address, location.relAddr, location.file, location.pid,
+        location.line, location.column);
+#else
     QtPrivate::QHashCombine hash;
     seed = hash(seed, location.address);
     seed = hash(seed, location.relAddr);
@@ -41,6 +46,7 @@ uint qHash(const PerfUnwind::Location &location, uint seed)
     seed = hash(seed, location.line);
     seed = hash(seed, location.column);
     return seed;
+#endif
 }
 
 bool operator==(const PerfUnwind::Location &a, const PerfUnwind::Location &b)
