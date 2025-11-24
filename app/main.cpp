@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
     app.setApplicationName(QStringLiteral("perfparser"));
-    app.setApplicationVersion(QStringLiteral("10.0"));
+    app.setApplicationVersion(QStringLiteral("18.0"));
 
     if (qEnvironmentVariableIsSet("PERFPARSER_DEBUG_WAIT")) {
 #ifdef Q_OS_LINUX
