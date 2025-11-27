@@ -51,7 +51,7 @@ private slots:
             QVERIFY(dir.exists(path));
 
             QFile f(tempDir.path() + file);
-            f.open(QIODevice::WriteOnly);
+            QVERIFY(f.open(QIODevice::WriteOnly));
             f.write(file.toUtf8());
             QVERIFY(f.exists());
         }
