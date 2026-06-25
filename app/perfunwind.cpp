@@ -18,9 +18,11 @@
 **
 ****************************************************************************/
 
+#include "perfunwind.h"
+
+#include "perfparsertr.h"
 #include "perfregisterinfo.h"
 #include "perfsymboltable.h"
-#include "perfunwind.h"
 
 #include <QDebug>
 #include <QDir>
@@ -28,6 +30,8 @@
 #include <QtEndian>
 
 #include <cstring>
+
+using namespace PerfParser;
 
 const qint32 PerfUnwind::s_kernelPid = -1;
 
@@ -957,9 +961,10 @@ PerfKallsymEntry PerfUnwind::findKallsymEntry(quint64 address)
             }
         }
         if (!m_kallsyms.parseMapping(path)) {
-            sendError(InvalidKallsyms,
-                      tr("Failed to parse kernel symbol mapping file \"%1\": %2")
-                            .arg(path, m_kallsyms.errorString()));
+            sendError(
+                InvalidKallsyms,
+                Tr::tr("Failed to parse kernel symbol mapping file \"%1\": %2")
+                    .arg(path, m_kallsyms.errorString()));
         }
     }
     return m_kallsyms.findEntry(address);
@@ -1050,11 +1055,14 @@ void PerfUnwind::flushEventBuffer(uint desiredBufferSize)
     if (!m_mmapBuffer.isEmpty() && m_mmapBuffer.first().time() < m_lastFlushMaxTime) {
         // when an mmap event is not following our desired time order, it can
         // severly break our analysis. as such we report a real error in these cases
-        sendError(TimeOrderViolation,
-                  tr("Time order violation of MMAP event across buffer flush detected. "
-                     "Event time is %1, max time during last buffer flush was %2. "
-                     "This potentially breaks the data analysis.")
-                    .arg(m_mmapBuffer.first().time()).arg(m_lastFlushMaxTime));
+        sendError(
+            TimeOrderViolation,
+            Tr::tr(
+                "Time order violation of MMAP event across buffer flush detected. "
+                "Event time is %1, max time during last buffer flush was %2. "
+                "This potentially breaks the data analysis.")
+                .arg(m_mmapBuffer.first().time())
+                .arg(m_lastFlushMaxTime));
         violatesTimeOrder = true;
     }
 

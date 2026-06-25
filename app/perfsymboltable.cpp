@@ -24,9 +24,11 @@
 ****************************************************************************/
 
 #include "perfsymboltable.h"
-#include "perfunwind.h"
+
 #include "perfdwarfdiecache.h"
 #include "perfeucompat.h"
+#include "perfparsertr.h"
+#include "perfunwind.h"
 
 #include <QDebug>
 #include <QDir>
@@ -37,6 +39,8 @@
 #if HAVE_DWFL_GET_DEBUGINFOD_CLIENT
 #include <debuginfod.h>
 #endif
+
+using namespace PerfParser;
 
 PerfSymbolTable::PerfSymbolTable(qint32 pid, Dwfl_Callbacks *callbacks, PerfUnwind *parent) :
     m_perfMapFile(QDir::tempPath() + QDir::separator()
@@ -164,10 +168,12 @@ void PerfSymbolTable::registerElf(const PerfRecordMmap &mmap, const QByteArray &
         fullPath = findFile(filePath, fileName, buildId);
 
         if (!fullPath.isFile()) {
-            m_unwind->sendError(PerfUnwind::MissingElfFile,
-                                PerfUnwind::tr("Could not find ELF file for %1. "
-                                               "This can break stack unwinding "
-                                               "and lead to missing symbols.").arg(filePath));
+            m_unwind->sendError(
+                PerfUnwind::MissingElfFile,
+                Tr::tr(
+                    "Could not find ELF file for %1. This can break stack unwinding and lead to "
+                    "missing symbols.")
+                    .arg(filePath));
         } else {
             ElfAndFile elf(fullPath);
             if (!elf.elf())

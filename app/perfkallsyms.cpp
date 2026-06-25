@@ -19,11 +19,15 @@
 
 #include "perfkallsyms.h"
 
+#include "perfparsertr.h"
+
 #include <QFile>
 #include <QLocale>
 #include <QTextStream>
 
 #include <algorithm>
+
+using namespace PerfParser;
 
 bool PerfKallsyms::parseMapping(const QString &path)
 {
@@ -55,7 +59,7 @@ bool PerfKallsyms::parseMapping(const QString &path)
         bool ok = false;
         entry.address = address.toULongLong(&ok, 16);
         if (!ok && address != "(null)") {
-            m_errorString = tr("Invalid address: %1").arg(QString::fromUtf8(address));
+            m_errorString = Tr::tr("Invalid address: %1").arg(QString::fromUtf8(address));
             valid = false;
             break;
         }
@@ -68,7 +72,7 @@ bool PerfKallsyms::parseMapping(const QString &path)
     }
 
     if (valid && m_entries.isEmpty()) {
-        m_errorString = tr("Mapping is empty.");
+        m_errorString = Tr::tr("Mapping is empty.");
         return false;
     }
 
